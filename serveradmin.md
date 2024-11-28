@@ -1,6 +1,6 @@
 ## Creating a user account
 
-1. send the following email to the user
+### Send the following email to the user
 
 > Dear {user}, 
 >
@@ -11,7 +11,7 @@
 > https://msserver.fss.uu.nl/docs
 
 
-1. create the actual account
+### Create the actual account
 ```bash
 export username=newuser
 sudo useradd -m -d /mnt/$username $username
@@ -20,7 +20,7 @@ sudo chmod -R go-rw /mnt/$username
 sudo passwd $username
 ```
 
-1. email the user
+### Email the user 
 
 ## Temporary folder monitoring
 
@@ -30,4 +30,4 @@ sudo passwd $username
 
 
 
-## 
+## Fixing R package installation errors
