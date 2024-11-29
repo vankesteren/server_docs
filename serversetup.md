@@ -8,7 +8,7 @@ Here are the steps to follow in order to set up our department compute server
 
 Ask FSBS IT department to set up the latest LTS ubuntu server machine on their server infrastructure, with ports 22 (SSH), 80 (HTTP), and 443 (HTTPS) open. Request a url for the server, we will assume this is `msserver.fss.uu.nl`. Request a boot disk (`/dev/sda`) of about 100GB and a scratch / data disk (`/dev/sdb`) of about 2TB
 
-> Our contacts at the it department are Halim Skori and Martijn van Ackooij
+> Our contacts at the IT department are Halim Skori and Martijn van Ackooij
 
 ## Mount the data disk
 
@@ -18,8 +18,7 @@ First, SSH into the server using the provided admin account (assumed to be `labg
 
 ```bash
 ssh labgenius@msserver.fss.uu.nl
-# now enter the password
-
+# now enter the password you received from IT
 ```
 
 Then, check if the hard disk is there
@@ -38,17 +37,17 @@ Then, to mount the new `/dev/sdb1` partition, you have to edit `/etc/fstab` (CAR
 ```
 
 ## Create admin account
-, and create your own admin account (we'll use `erikjan`):
+Now, create your own admin account (we'll use `erikjan`):
 
 ```bash
 ssh labgenius@msserver.fss.uu.nl
 # now enter the password
 
-sudo useradd -m -d /data/$username $username
+sudo useradd -m -d /data/erikjan erikjan
+sudo chown -R erikjan /data/erikjan
+sudo chmod -R go-rw /data/erikjan
 sudo adduser erikjan sudo
-sudo chown -R $username /data/$username
-sudo chmod -R go-rw /data/$username
-sudo passwd $username
+sudo passwd erikjan
 ```
 
 Now log out of the default account and log into your own account.
