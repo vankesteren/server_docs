@@ -1,7 +1,7 @@
-# Department compute server: user documentation
+# User documentation
 This is the documentation for using the Methods & Statistics department compute server.
 
-- [Department compute server: user documentation](#department-compute-server-user-documentation)
+- [User documentation](#user-documentation)
   - [Connecting to the server](#connecting-to-the-server)
   - [User account](#user-account)
     - [Updating the password](#updating-the-password)

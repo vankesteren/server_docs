@@ -5,9 +5,9 @@
     - [Send the following email to the user](#send-the-following-email-to-the-user)
     - [Create the actual account](#create-the-actual-account)
     - [Email the user](#email-the-user)
-  - [Temporary folder monitoring](#temporary-folder-monitoring)
   - [Managing RStudio sessions](#managing-rstudio-sessions)
   - [Fixing R package installation errors](#fixing-r-package-installation-errors)
+  - [Temporary folder monitoring](#temporary-folder-monitoring)
 
 
 ## Creating a user account
@@ -34,12 +34,8 @@ sudo passwd $username
 
 ### Email the user 
 
-## Temporary folder monitoring
-
-
-
 ## Managing RStudio sessions
 
-
-
 ## Fixing R package installation errors
+
+## Temporary folder monitoring
