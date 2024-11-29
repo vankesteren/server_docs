@@ -1,7 +1,10 @@
 # Documentation for the department compute server
 
-Welcome to the documentation for the M&S department compute server. Select the relevant section for you:
+This is the documentation page for the M&S department compute server. Select the relevant section for you:
 
-- [User documentation](userdocs)
-- [Server configuration](serversetup)
-- [Server administration](serveradmin)
+
+## For (prospective) users
+Go to the [User documentation](userdocs)
+
+## For administrators
+Read our [server administration guide](serveradmin), or learn how to [set up and configure the server](serversetup).
