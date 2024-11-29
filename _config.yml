@@ -1,6 +1,8 @@
 title: M&S compute server documentation
 description: User, admin, and configuration documentation for the M&S department compute server
 show_downloads: false
+github:
+    is_project_page: false
 
 remote_theme: pages-themes/minimal@v0.2.0
 plugins:
