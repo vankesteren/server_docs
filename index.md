@@ -2,7 +2,6 @@
 
 This is the documentation page for the M&S department compute server. Select the relevant section for you:
 
-
 ## For (prospective) users
 Go to the [User documentation](userdocs)
 
