@@ -14,9 +14,9 @@
 ### Create the actual account
 ```bash
 export username=newuser
-sudo useradd -m -d /mnt/$username $username
-sudo chown -R $username /mnt/$username
-sudo chmod -R go-rw /mnt/$username
+sudo useradd -m -d /data/$username $username
+sudo chown -R $username /data/$username
+sudo chmod -R go-rw /data/$username
 sudo passwd $username
 ```
 

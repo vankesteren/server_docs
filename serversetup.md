@@ -6,25 +6,52 @@ Here are the steps to follow in order to set up our department compute server
 
 ## Request a virtual machine
 
-Ask FSBS IT department to set up the latest LTS ubuntu server machine on their server infrastructure, with ports 22 (SSH), 80 (HTTP), and 443 (HTTPS) open. Request a url for the server, we will assume this is `msserver.fss.uu.nl`. 
+Ask FSBS IT department to set up the latest LTS ubuntu server machine on their server infrastructure, with ports 22 (SSH), 80 (HTTP), and 443 (HTTPS) open. Request a url for the server, we will assume this is `msserver.fss.uu.nl`. Request a boot disk (`/dev/sda`) of about 100GB and a scratch / data disk (`/dev/sdb`) of about 2TB
 
 > Our contacts at the it department are Halim Skori and Martijn van Ackooij
 
-## Create admin account
-SSH into the server using the provided admin account (assumed to be `labgenius`), and create your own admin account (we'll use `erikjan`):
+## Mount the data disk
+
+The data disk will contain the home directories of the users, as well as any data they have.
+
+First, SSH into the server using the provided admin account (assumed to be `labgenius`)
 
 ```bash
 ssh labgenius@msserver.fss.uu.nl
 # now enter the password
 
-sudo useradd -m -d /mnt/$username $username
+```
+
+Then, check if the hard disk is there
+
+```bash
+sudo fdisk -l
+```
+
+Then, follow [this guide](https://askubuntu.com/a/154184) to create an ext4 formatted partition on `/dev/sdb`. Note that you probably need to press G instead of O in the first step and some things may be slightly different.
+
+Then, to mount the new `/dev/sdb1` partition, you have to edit `/etc/fstab` (CAREFULLY), add the following:
+
+```
+# sdb1 mounted on data
+/dev/sdb1 /data ext4 defaults 0 1
+```
+
+## Create admin account
+, and create your own admin account (we'll use `erikjan`):
+
+```bash
+ssh labgenius@msserver.fss.uu.nl
+# now enter the password
+
+sudo useradd -m -d /data/$username $username
 sudo adduser erikjan sudo
-sudo chown -R $username /mnt/$username
-sudo chmod -R go-rw /mnt/$username
+sudo chown -R $username /data/$username
+sudo chmod -R go-rw /data/$username
 sudo passwd $username
 ```
 
-Now log out of the default account and log into your own accounts.
+Now log out of the default account and log into your own account.
 
 ## Update packages
 
@@ -44,7 +71,7 @@ sudo unminimize
 
 # install a boatload more software
 # some of these are packages, some of these are libraries needed to install R packages
-sudo apt install htop gdebi-core make build-essential libcurl4-openssl-dev zlib1g-dev libxml2-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev gfortran libblas-dev liblapack-dev cmake libudunits2-dev software-properties-common dirmngr
+sudo apt install htop gdebi-core make build-essential libcurl4-openssl-dev zlib1g-dev libxml2-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev gfortran libblas-dev liblapack-dev cmake libudunits2-dev software-properties-common dirmngr cargo rustc
 
 # now a reboot may be in order
 sudo reboot 
@@ -56,7 +83,7 @@ After the machine has rebooted, ssh into it again with your account.
 
 ## Installing R
 
-There are two options for installing R, either via `apt` or by compiling from source. I will show both here, but for the latest server we need to do the latter to enable full use of the 240 cores. For both methods, you should first set up the official R apt repository source. The below instructions come directly from CRAN [here](https://cran.r-project.org/bin/linux/ubuntu/) in November 2024 and may need to be adjusted for later versions of R.
+There are two options for installing R, either via `apt` or by compiling from source. I will show both here, but for the latest server we need to do the latter to enable full use of the 240 cores. To see if this is still needed, keep an eye on [this github issue](https://github.com/rstudio/rstudio/issues/15360) For both methods, you should first set up the official R apt repository source. The below instructions come directly from CRAN [here](https://cran.r-project.org/bin/linux/ubuntu/) in November 2024 and may need to be adjusted for later versions of R.
 
 ```bash
 # update indices
@@ -85,9 +112,9 @@ Now there will be an R version in `/usr/bin/R`, and the installation will be at 
 
 To use all the cores, we need to create a version of R with a higher-than-default number of simultaneously allowed "connections". For this, we need to download the source code of R itself, then adjust a value in the file `connections.c` and then compile R.
 
-More info on compiling R from source is [here](https://docs.posit.co/resources/install-r-source.html), and more info on this connections thing is [here]()
+More info on compiling R from source is [here](https://docs.posit.co/resources/install-r-source.html), and more info on this connections thing is [here](https://search.r-project.org/CRAN/refmans/parallelly/html/availableConnections.html#How-to-increase-the-limit).
 
-First, add the R source repository to the apt sources using the [`nano`]() text editor
+First, add the R source repository to the apt sources using the built-in [`nano`](https://en.wikipedia.org/wiki/GNU_nano) text editor
 
 ```bash
 # find the name of the source list
@@ -97,6 +124,7 @@ sudo nano /etc/apt/sources.list.d/archive_uri-https_cloud_r-project_org_bin_linu
 ```
 
 This file will look something like this:
+
 ```bash
 deb https://cloud.r-project.org/bin/linux/ubuntu noble-cran40/
 # deb-src https://cloud.r-project.org/bin/linux/ubuntu noble-cran40/
@@ -119,6 +147,7 @@ sudo apt build-dep r-base
 ```
 
 Now it's time to download the R source code
+
 ```bash
 # Update the version in the lines below
 # download the sources
@@ -135,7 +164,8 @@ Then, we are actually going to edit the source code:
 sudo nano src/main/connections.c
 ```
 
-Now look up the line containing
+Now scroll down to the line containing
+
 ```c
 static int NCONNECTIONS = 128; /* need one per cluster node */
 ```
@@ -155,7 +185,7 @@ make -j 24
 sudo make install
 ```
 
-Done! Now you have R installed under /opt/R/4.4.2. You can make links to /usr/bin/:
+Done! Now you have R installed under `/opt/R/4.4.2`. You should make links to `/usr/bin/` so you can run R by just typing `R` in the console, and so RStudio Server can find R:
 
 ```bash
 sudo ln -s /opt/R/4.4.2/bin/R /usr/bin/R
