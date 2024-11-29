@@ -1,8 +1,8 @@
-# 1. M&S department computer user documentation
+# 1. User documentation
 
 This is the documentation for using the Methods & Statistics department compute server.
 
-- [1. M\&S department computer user documentation](#1-ms-department-computer-user-documentation)
+- [1. User documentation](#1-user-documentation)
 - [2. Connecting to the server](#2-connecting-to-the-server)
 - [3. User account](#3-user-account)
   - [3.1. Updating the password](#31-updating-the-password)
