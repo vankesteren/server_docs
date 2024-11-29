@@ -1,6 +1,20 @@
-# Server setup documentation
-
+# Configuring the server
 Here are the steps to follow in order to set up our department compute server
+
+- [Configuring the server](#configuring-the-server)
+- [Initial setup](#initial-setup)
+  - [Request a virtual machine](#request-a-virtual-machine)
+  - [Mount the data disk](#mount-the-data-disk)
+  - [Create admin account](#create-admin-account)
+  - [Update packages](#update-packages)
+- [Installing R and RStudio server](#installing-r-and-rstudio-server)
+  - [Installing R](#installing-r)
+    - [Installing R through the package manager](#installing-r-through-the-package-manager)
+    - [Compiling R from source](#compiling-r-from-source)
+  - [Configuring R](#configuring-r)
+  - [Installing RStudio server](#installing-rstudio-server)
+
+
 
 # Initial setup
 

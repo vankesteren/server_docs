@@ -1,5 +1,22 @@
 # Department compute server: user documentation
-This is the user documentation for using the Methods & Statistics department compute server.
+This is the documentation for using the Methods & Statistics department compute server.
+
+- [Department compute server: user documentation](#department-compute-server-user-documentation)
+  - [Connecting to the server](#connecting-to-the-server)
+  - [User account](#user-account)
+    - [Updating the password](#updating-the-password)
+  - [Using the server](#using-the-server)
+    - [Server specifications](#server-specifications)
+    - [Data storage](#data-storage)
+      - [Backing up your data](#backing-up-your-data)
+    - [R sessions](#r-sessions)
+    - [R packages](#r-packages)
+    - [Parallel processing](#parallel-processing)
+    - [Additional software](#additional-software)
+      - [How to run additional software with a GUI](#how-to-run-additional-software-with-a-gui)
+      - [Matlab](#matlab)
+    - [GPU](#gpu)
+
 
 ## Connecting to the server
 Connecting to the server is only available in two ways:

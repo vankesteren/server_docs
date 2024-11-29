@@ -1,3 +1,15 @@
+# Server administration
+
+- [Server administration](#server-administration)
+  - [Creating a user account](#creating-a-user-account)
+    - [Send the following email to the user](#send-the-following-email-to-the-user)
+    - [Create the actual account](#create-the-actual-account)
+    - [Email the user](#email-the-user)
+  - [Temporary folder monitoring](#temporary-folder-monitoring)
+  - [Managing RStudio sessions](#managing-rstudio-sessions)
+  - [Fixing R package installation errors](#fixing-r-package-installation-errors)
+
+
 ## Creating a user account
 
 ### Send the following email to the user
