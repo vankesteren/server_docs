@@ -1,18 +1,18 @@
-# Server administration
+# 1. Server administration
 
-- [Server administration](#server-administration)
-  - [Creating a user account](#creating-a-user-account)
-    - [Send the following email to the user](#send-the-following-email-to-the-user)
-    - [Create the actual account](#create-the-actual-account)
-    - [Email the user](#email-the-user)
-  - [Managing RStudio sessions](#managing-rstudio-sessions)
-  - [Fixing R package installation errors](#fixing-r-package-installation-errors)
-  - [Temporary folder monitoring](#temporary-folder-monitoring)
+- [1. Server administration](#1-server-administration)
+- [2. Creating a user account](#2-creating-a-user-account)
+  - [2.1. Send the following email to the user](#21-send-the-following-email-to-the-user)
+  - [2.2. Create the actual account](#22-create-the-actual-account)
+  - [2.3. Email the user](#23-email-the-user)
+- [3. Managing RStudio sessions](#3-managing-rstudio-sessions)
+- [4. Fixing R package installation errors](#4-fixing-r-package-installation-errors)
+- [5. Temporary folder monitoring](#5-temporary-folder-monitoring)
 
 
-## Creating a user account
+# 2. Creating a user account
 
-### Send the following email to the user
+## 2.1. Send the following email to the user
 
 > Dear {user}, 
 >
@@ -23,7 +23,7 @@
 > https://msserver.fss.uu.nl/docs
 
 
-### Create the actual account
+## 2.2. Create the actual account
 ```bash
 export username=newuser
 sudo useradd -m -d /data/$username $username
@@ -32,10 +32,10 @@ sudo chmod -R go-rw /data/$username
 sudo passwd $username
 ```
 
-### Email the user 
+## 2.3. Email the user 
 
-## Managing RStudio sessions
+# 3. Managing RStudio sessions
 
-## Fixing R package installation errors
+# 4. Fixing R package installation errors
 
-## Temporary folder monitoring
+# 5. Temporary folder monitoring
