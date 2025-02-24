@@ -14,6 +14,8 @@ Here are the steps to follow in order to set up our department compute server
     - [3.1.2. Compiling R from source](#312-compiling-r-from-source)
   - [3.2. Configuring R](#32-configuring-r)
   - [3.3. Installing RStudio server](#33-installing-rstudio-server)
+- [4. Setting up a reverse proxy](#4-setting-up-a-reverse-proxy)
+  - [4.1. Installing nginx](#41-installing-nginx)
 
 
 
@@ -217,3 +219,55 @@ If there are issues with this, refer to the [relevant server administration page
 
 ## 3.3. Installing RStudio server
 
+RStudio server is installed basically as standard, following the main installation documentation [here](https://posit.co/download/rstudio-server/)
+
+
+```bash
+# this will change based on the version of RStudio and the version of the server
+wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2024.12.1-563-amd64.deb
+sudo gdebi rstudio-server-2024.12.1-563-amd64.deb
+```
+
+Then, the RStudio server will need to be configured as well.
+
+```bash
+sudo nano /etc/rstudio/rserver.conf
+```
+
+This file should look like this:
+
+```
+# Server Configuration File
+www-port=8787
+```
+
+Then `ctrl+x`, `y` and move on to the next configuration file:
+
+```bash
+sudo nano /etc/rstudio/rsession.conf
+```
+
+Which should look like this:
+
+```
+# R Session Configuration File
+session-timeout-minutes=0
+
+# library path
+r-libs-user=~/R/packages
+```
+
+Now, we should stop and restart RStudio server and it will be ready!
+```bash
+sudo rstudio-server stop
+sudo rstudio-server verify-installation
+sudo rstudio-server start
+```
+
+> NB: the server will listen on port 8787, which is not accessible from outside the server itself. We need to set up a reverse proxy to make the RStudio service available. This is done in the next section.
+
+# 4. Setting up a reverse proxy
+
+We will use `nginx` to set up a reverse proxy and to enable secure connection over `https` to the server (over and above the required vpn security). This requires installing `nginx` and then configuring it using its native configuration file language for our specific purpose.
+
+## 4.1. Installing nginx
