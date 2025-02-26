@@ -16,6 +16,7 @@ body {
 button {
   background-color: #555555;
   border: none;
+  border-radius: 0.5rem;
   color: white;
   padding: 1rem 1.5rem;
   text-align: center;
@@ -27,4 +28,9 @@ button {
 
 button:hover {
     background-color: #888888;
+}
+
+.logo {
+    border-radius: 2rem;
+    max-width: 15rem;
 }
