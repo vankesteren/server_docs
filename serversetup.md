@@ -87,7 +87,7 @@ sudo unminimize
 
 # install a boatload more software
 # some of these are packages, some of these are libraries needed to install R packages
-sudo apt install htop gdebi-core make build-essential libcurl4-openssl-dev zlib1g-dev libxml2-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev gfortran libblas-dev liblapack-dev cmake libudunits2-dev software-properties-common dirmngr cargo rustc
+sudo apt install htop gdebi-core make build-essential libcurl4-openssl-dev zlib1g-dev libxml2-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev gfortran libblas-dev liblapack-dev cmake libudunits2-dev libgdal-dev software-properties-common dirmngr cargo rustc
 
 # now a reboot may be in order
 sudo reboot 
