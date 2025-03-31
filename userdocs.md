@@ -1,11 +1,14 @@
 This is the documentation for using the Methods & Statistics department compute server.
 
 - [1. Connecting to the server](#1-connecting-to-the-server)
+  - [1.1. RStudio server](#11-rstudio-server)
+  - [1.2. SSH connection](#12-ssh-connection)
 - [2. User account](#2-user-account)
   - [2.1. Updating the password](#21-updating-the-password)
 - [3. Using the server](#3-using-the-server)
   - [3.1. Server specifications](#31-server-specifications)
-  - [3.2. Data storage](#32-data-storage)
+  - [Transferring data to the server](#transferring-data-to-the-server)
+  - [3.2. Storing data](#32-storing-data)
     - [3.2.1. Backing up your data](#321-backing-up-your-data)
   - [3.3. R sessions](#33-r-sessions)
   - [3.4. R packages](#34-r-packages)
@@ -18,10 +21,14 @@ This is the documentation for using the Methods & Statistics department compute 
 
 # 1. Connecting to the server
 Connecting to the server is only available in two ways:
-- from our department with an ethernet connection.
+- from our department's Utrecht University network
 - via Utrecht University [vpn](https://vpn.uu.nl) from anywhere. 
 
-To connect, type in your browser the following URL: [msserver.fss.uu.nl](http://msserver.fss.uu.nl). You wil be greeted with an `RStudio` login window. This works best in google chrome or mozilla firefox.
+## 1.1. RStudio server
+The easiest way to connect is to type in your browser the following URL: [msserver.fss.uu.nl](http://msserver.fss.uu.nl). You wil be greeted with an `RStudio` login window. This works best in google chrome or mozilla firefox.
+
+## 1.2. SSH connection
+Alternatively, you can install an ssh client and connect to the server via ssh. In a terminal, enter `ssh username@msserver.fss.uu.nl`, then enter your password, and you will be logged in to the server, at your own home directory. In this way, it is possible to run loads of other software than `R`, for example `python` (preferably through [`uv`](https://docs.astral.sh/uv/)) or `julia` (through [`juliaup`](https://github.com/JuliaLang/juliaup)).
 
 # 2. User account
 To access the server, you need a login / user account, which is available on request. A user account needs to be manually created for you. Send an email to the admin (Erik-Jan) for this, _with an explanation of why you want to use the computer_. You will receive a default password which you can change when you first log in.
@@ -34,22 +41,30 @@ To use the server, abide by these rules:
 
 1. Please read the below carefully. 
 2. If you aren't sure about something, read again and then _ask_ before doing.
-3. If you misuse the computer, your account will be suspended.
+3. If you misuse the server, your account will be suspended.
 
-Multiple users can connect to the server at the same time. If you are preparing a script, you can always login to the server. If you want to run a large simulation, please reserve time for this on the [Google sheet schedule](https://docs.google.com/spreadsheets/d/1YmaAHvosjAvPZCP4mZkHpW-yuWUnar4o5oMbvXBvWIg/edit?usp=sharing).
+Multiple users can connect to the server at the same time. If you are preparing your simulation or just trying out small stuff, you can always login to the server. If you want to run a large simulation, please reserve time for this on the [Google sheet schedule](https://docs.google.com/spreadsheets/d/1YmaAHvosjAvPZCP4mZkHpW-yuWUnar4o5oMbvXBvWIg/edit?usp=sharing).
 
 ## 3.1. Server specifications
+
+The server is a virtual server running on quite serious hardware. The server can be scaled up to the following:
 ```
-CPU     :  2 x Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz
-Threads :  48
-Memory  :  64GB
-GPU     :  Nvidia GTX 1080Ti 
-Storage :  Main disk : 2TB    WDC WD20EFRX-68EUZN0  /data
-           OS disk   : 120GB  INTEL SSDSC2KW120H6   /
+CPU     :  2x INTEL(R) XEON(R) PLATINUM 8580
+Threads :  240
+Memory  :  1TB
+GPU     :  None
+Storage :  Main disk : 2.0T /data
+           OS disk   : 58G  /
 ```
 
-## 3.2. Data storage
-Please exclusively use your home directory (`/data/<your-user-name>/`, or alternatively `~/`), which is on the 2TB main harddrive. No other user can see your files there.
+However, by default the server has fewer threads (usually around 224). To check from R how many threads are available, run `parallel::detectCores()`.
+
+## Transferring data to the server
+
+RStudio server has a nice "upload" functionality in the files pane, where you can upload individual files or whole folders as a zip file (which is automatically extracted, nice for RStudio projects).
+
+## 3.2. Storing data
+Please exclusively use your home directory (`/data/<your-user-name>/`, or alternatively `~/`), which is on the main drive. No other user has access to your files there (except the admin).
 
 _Example_
 ```r
@@ -57,9 +72,14 @@ my_big_matrix <- matrix(0, 1e4, 1e4)
 saveRDS(my_big_matrix, "~/bigfile.rds")
 ```
 
+> [!NOTE]
+> Some programs or R packages store large amounts of data in the `/tmp` directory on the OS disk. Please make sure that this does not fill up the harddisk or the RStudio server will crash. 
+> 
+> For example, for `brms` / `cmdstanr`, first create a custom directory in your home directory (e.g., `~/tmp`), and then set `options(cmdstanr_output_dir = "~/tmp")` at the start of your script. Then, make sure to use the `cmdstanr` backend in your call to `brms::brm()`.
+
 ### 3.2.1. Backing up your data
 
-> You are responsible for archiving your data. The server is not backed up in any way and we provide no guarantees. Consider your home directory as temporary/scratch storage.
+> You are responsible for archiving your data. We provide no guarantees on backing up your data. Consider your home directory as temporary/scratch storage.
 
 After running simulations, it is wise to archive your results somewhere you can access them in case the hard drive of the server breaks. You can do this from the RStudio server by selecting "download" in the files tab. 
 
@@ -70,7 +90,7 @@ _Example_
 To copy the entire folder `simulation_folder` to the local backup folder `local_backup`, the user `testuser` can run the following command:
 
 ```bash
-scp -rC testuser@mscomputer.fss.uu.nl:~/simulation_folder local_backup
+scp -rC testuser@msserver.fss.uu.nl:~/simulation_folder local_backup
 ```
 
 <details>
