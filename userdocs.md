@@ -176,10 +176,3 @@ For Windows:
 6. run the program, for example `pycharm`.
 
 A display should now open. If it does not, contact the administrator.
-
-
-## 3.8. GPU
-You can use the GPU if you are doing neural network stuff. Please indicate that you are using the GPU in the google sheet as well. 
-
-- Current Nvidia driver installed: `510.39.01`
-- Current CUDA version installed: `11.6`
