@@ -10,6 +10,7 @@
   - [2.3. Temporary folder monitoring](#23-temporary-folder-monitoring)
 - [3. Managing RStudio sessions](#3-managing-rstudio-sessions)
 - [4. Fixing R package installation errors](#4-fixing-r-package-installation-errors)
+- [5. Updating R](#5-updating-r)
 
 
 # 1. Creating a user account
@@ -36,8 +37,8 @@ After receiving the formal request for an account, it is time to create the acco
 ```bash
 export username=newuser # replace newuser with the username
 sudo useradd -m -d /data/$username $username
-sudo chown -R $username /data/$username
-sudo chmod -R go-rw /data/$username
+sudo chown -R $username /data/$username # set user to owner of 
+sudo chmod -R go-rwx /data/$username # remove read write and execute permissions for anyone but owner
 sudo passwd $username
 ```
 
@@ -123,3 +124,5 @@ The commandline application `rstudio-server` is used to manage sessions on the R
 # 4. Fixing R package installation errors
 
 
+# 5. Updating R
+Update the R version in the [userdocs](./userdocs).
