@@ -6,17 +6,17 @@ This is the documentation for using the Methods & Statistics department compute 
 - [2. User account](#2-user-account)
   - [2.1. Updating the password](#21-updating-the-password)
 - [3. Using the server](#3-using-the-server)
-  - [3.1. Server specifications](#31-server-specifications)
-  - [3.2. Transferring data to the server](#32-transferring-data-to-the-server)
-  - [3.3. Storing data](#33-storing-data)
-    - [3.3.1. Backing up your data](#331-backing-up-your-data)
-  - [3.4. R sessions](#34-r-sessions)
-  - [3.5. R packages](#35-r-packages)
-  - [3.6. Parallel processing](#36-parallel-processing)
-  - [3.7. Additional software](#37-additional-software)
-    - [3.7.1. Visual studio code remote programming](#371-visual-studio-code-remote-programming)
-    - [3.7.2. How to run additional software with a GUI](#372-how-to-run-additional-software-with-a-gui)
-  - [3.8. GPU](#38-gpu)
+  - [3.1. Scheduling time](#31-scheduling-time)
+  - [3.2. Server specifications](#32-server-specifications)
+  - [3.3. Transferring data to the server](#33-transferring-data-to-the-server)
+  - [3.4. Storing data](#34-storing-data)
+    - [3.4.1. Backing up your data](#341-backing-up-your-data)
+  - [3.5. R sessions](#35-r-sessions)
+  - [3.6. R packages](#36-r-packages)
+  - [3.7. Parallel processing](#37-parallel-processing)
+  - [3.8. Additional software](#38-additional-software)
+    - [3.8.1. Visual studio code remote programming](#381-visual-studio-code-remote-programming)
+    - [3.8.2. How to run additional software with a GUI](#382-how-to-run-additional-software-with-a-gui)
 
 
 # 1. Connecting to the server
@@ -43,9 +43,12 @@ To use the server, abide by these rules:
 2. If you aren't sure about something, read again and then _ask_ before doing.
 3. If you misuse the server, your account will be suspended.
 
+## 3.1. Scheduling time
 Multiple users can connect to the server at the same time. If you are preparing your simulation or just trying out small stuff, you can always login to the server. If you want to run a large simulation, please reserve time for this on the [Google sheet schedule](https://docs.google.com/spreadsheets/d/1YmaAHvosjAvPZCP4mZkHpW-yuWUnar4o5oMbvXBvWIg/edit?usp=sharing).
 
-## 3.1. Server specifications
+Please try to keep the maximum reservation time to maximum 1 week in busy periods. The schedule includes a "% use" column, this means either the maximum percentage of cores you will use or the maximum percentage of RAM you will use, whichever is biggest. (Don't worry too much about this, just try to estimate it a little bit by running a test and guesstimating).
+
+## 3.2. Server specifications
 
 The server is a virtual server running on quite serious hardware. The server can be scaled up to the following:
 ```
@@ -59,7 +62,7 @@ Storage :  Main disk : 2.0T /data
 
 However, by default the server has fewer threads (usually around 224). To check from R how many threads are available, run `parallel::detectCores()`.
 
-## 3.2. Transferring data to the server
+## 3.3. Transferring data to the server
 
 RStudio server has a nice "upload" functionality in the files pane, where you can upload individual files or whole folders as a zip file (which is automatically extracted, nice for RStudio projects). 
 
@@ -69,7 +72,7 @@ Another, more robust option for transferring data to the server is through the `
 scp -rC ./my_project username@msserver.fss.uu.nl:~/
 ```
 
-## 3.3. Storing data
+## 3.4. Storing data
 Please exclusively use your home directory (`/data/<your-user-name>/`, or alternatively `~/`), which is on the main drive. No other user has access to your files there (except the admin).
 
 _Example_
@@ -83,7 +86,7 @@ saveRDS(my_big_matrix, "~/bigfile.rds")
 > 
 > For example, for `brms` / `cmdstanr`, first create a custom directory in your home directory (e.g., `~/tmp`), and then set `options(cmdstanr_output_dir = "~/tmp")` at the start of your script. Then, make sure to use the `cmdstanr` backend in your call to `brms::brm()`.
 
-### 3.3.1. Backing up your data
+### 3.4.1. Backing up your data
 
 > [!IMPORTANT]
 > You are responsible for archiving your data. We provide no guarantees on backing up your data. Consider your home directory as temporary/scratch storage.
@@ -100,7 +103,7 @@ To copy the entire folder `simulation_folder` to the local backup folder `local_
 scp -rC testuser@msserver.fss.uu.nl:~/simulation_folder local_backup
 ```
 
-## 3.4. R sessions
+## 3.5. R sessions
 When you log in, you start an `R` session. It will remain open until you stop it (red button in the top right corner). Please close your `R` session when you are done. The current R version is the following:
 
 ```
@@ -109,7 +112,7 @@ Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 ```
 
-## 3.5. R packages
+## 3.6. R packages
 Everyone gets their own personal `R` package repository automatically in `~/R/packages`. There should not be any interference with package versions.
 
 For robustness, we have installed the [`pak` package manager](https://pak.r-lib.org/). Please use it. It can install packages from CRAN and Bioconductor (`pak::pkg_install("tidyverse")`), GitHub (`pak::pkg_install("vankesteren/pensynth")`) local files (`pak::local_install("~/uploads/my_package")`), and more.
@@ -131,7 +134,7 @@ In addition, global packages are installed for everyone to use by default. If yo
 | `devtools`            | 2.4.5   |
 | `pak`                 | 0.8.0.1 |
 
-## 3.6. Parallel processing
+## 3.7. Parallel processing
 Multiple people can be logged into the server at the same time. If you reserve time on the server, you can use it, but please leave at least 4 cores available for other people to prepare their simulations.
 
 If you want to know how many cores are currently being used (and by whom), open a terminal (`shift + alt + R` in RStudio) and type `htop`.
@@ -149,7 +152,7 @@ In R, some packages / functions use OpenMP to parallellize underlying C/C++ code
 Sys.setenv("OMP_THREAD_LIMIT" = 220)
 ```
 
-## 3.7. Additional software
+## 3.8. Additional software
 
 |Software |Location           |
 |:--------|:------------------|
@@ -160,10 +163,10 @@ Sys.setenv("OMP_THREAD_LIMIT" = 220)
 
 If you have questions about additional software, send a message to the admin.
 
-### 3.7.1. Visual studio code remote programming
+### 3.8.1. Visual studio code remote programming
 You can also connect to the server via visual studio code. Just install the Remote - SSH extension and use it to connect to the server via SSH.
 
-### 3.7.2. How to run additional software with a GUI
+### 3.8.2. How to run additional software with a GUI
 For Windows:
 1. Install [`XMing`](https://sourceforge.net/projects/xming/) and [`Putty`](https://putty.org/). 
 2. Run `XMing` on your computer -- this will start an X server to accept incoming display connections
