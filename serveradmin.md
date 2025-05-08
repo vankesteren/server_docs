@@ -71,18 +71,23 @@ We also have [a teams page](https://teams.microsoft.com/l/team/19%3A477ed7103376
 If a user should be an admin, run the following
 
 ```sh
-sudo usermod -aG sudo <user>
+sudo usermod -aG sudo <username>
 ```
 
-Also add them to the contact information in the userdocs
+Also:
+- add them to the contact information in the userdocs
+- make them an owner on the microsoft teams page 
 
 If you want to remove a sudoer, run 
 
 ```sh
-sudo deluser username sudo
+# (this is untested, please check that it works)
+sudo deluser <username> sudo
 ```
 
-Also remove them from the userdocs contact table
+Also:
+- remove them from the userdocs contact table
+- make them a member (not an owner) of the microsoft teams page
 
 # 2. Server monitoring
 
