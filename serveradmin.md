@@ -4,6 +4,7 @@
   - [1.2. Create the actual account](#12-create-the-actual-account)
   - [1.3. Add the user to the teams page](#13-add-the-user-to-the-teams-page)
   - [1.4. Email the user](#14-email-the-user)
+  - [1.5. Add/remove admin rights](#15-addremove-admin-rights)
 - [2. Server monitoring](#2-server-monitoring)
   - [2.1. Process monitoring](#21-process-monitoring)
   - [2.2. Main storage monitoring](#22-main-storage-monitoring)
@@ -64,6 +65,24 @@ We also have [a teams page](https://teams.microsoft.com/l/team/19%3A477ed7103376
 > Happy computing!
 >
 > {your name}
+
+## 1.5. Add/remove admin rights
+
+If a user should be an admin, run the following
+
+```sh
+sudo usermod -aG sudo <user>
+```
+
+Also add them to the contact information in the userdocs
+
+If you want to remove a sudoer, run 
+
+```sh
+sudo deluser username sudo
+```
+
+Also remove them from the userdocs contact table
 
 # 2. Server monitoring
 
