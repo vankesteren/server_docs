@@ -93,7 +93,7 @@ saveRDS(my_big_matrix, "~/bigfile.rds")
 > [!CAUTION]
 > Some programs or R packages store large amounts of data in the `/tmp` directory on the OS disk. Please make sure that this does not fill up the harddisk or the RStudio server will crash. 
 > 
-> For example, for `brms` / `cmdstanr`, first create a custom directory in your home directory (e.g., `~/tmp`), and then set `options(cmdstanr_output_dir = "~/tmp")` at the start of your script. Then, make sure to use the `cmdstanr` backend in your call to `brms::brm()`.
+> For example, for `brms` / `cmdstanr`, first create a custom directory in your home directory (e.g., `~/tmp`), and then set `options(cmdstanr_output_dir = "~/tmp")` at the start of your script. Then, make sure to use the `cmdstanr` backend in your call to `brms::brm()`. If you are running `cmdstanr` in parallel, you may need to pass the temporary folder directly during the Markov chain Monte Carlo algorithm (e.g., `cmdstan_model$sample(…, output_dir = "~/tmp")`).
 
 ### 4.4.1. Backing up your data
 
