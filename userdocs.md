@@ -124,7 +124,7 @@ Platform: x86_64-pc-linux-gnu
 ## 4.6. R packages
 Everyone gets their own personal `R` package repository automatically in `~/R/packages`. There should not be any interference with package versions.
 
-For robustness, we have installed the [`pak` package manager](https://pak.r-lib.org/). Please use it. It can install packages from CRAN and Bioconductor (`pak::pkg_install("tidyverse")`), GitHub (`pak::pkg_install("vankesteren/pensynth")`) local files (`pak::local_install("~/uploads/my_package")`), and more.
+For robustness, we have installed the [`pak` package manager](https://pak.r-lib.org/). Please use it. It can install packages from CRAN and Bioconductor (`pak::pak("tidyverse")`), GitHub (`pak::pak("vankesteren/pensynth")`) local files (`pak::local_install("~/uploads/my_package")`), and more.
 
 If installation fails for a package, this is likely due to system libraries not being installed. Please try to figure out which system library is needed, you can use the functions: `pak::pkg_sysreqs()` and `pak::sysreqs_check_installed()`. Contact the admin to install the system library for you.
 
