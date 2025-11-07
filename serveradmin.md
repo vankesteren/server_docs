@@ -5,13 +5,14 @@
   - [1.3. Add the user to the teams page](#13-add-the-user-to-the-teams-page)
   - [1.4. Email the user](#14-email-the-user)
   - [1.5. Add/remove admin rights](#15-addremove-admin-rights)
-- [2. Server monitoring](#2-server-monitoring)
-  - [2.1. Process monitoring](#21-process-monitoring)
-  - [2.2. Main storage monitoring](#22-main-storage-monitoring)
-  - [2.3. Temporary folder monitoring](#23-temporary-folder-monitoring)
-- [3. Managing RStudio sessions](#3-managing-rstudio-sessions)
-- [4. Fixing R package installation errors](#4-fixing-r-package-installation-errors)
-- [5. Updating R](#5-updating-r)
+- [2. Deleting a user account](#2-deleting-a-user-account)
+- [3. Server monitoring](#3-server-monitoring)
+  - [3.1. Process monitoring](#31-process-monitoring)
+  - [3.2. Main storage monitoring](#32-main-storage-monitoring)
+  - [3.3. Temporary folder monitoring](#33-temporary-folder-monitoring)
+- [4. Managing RStudio sessions](#4-managing-rstudio-sessions)
+- [5. Fixing R package installation errors](#5-fixing-r-package-installation-errors)
+- [6. Updating R](#6-updating-r)
 
 
 # 1. Creating a user account
@@ -33,7 +34,14 @@
 
 ## 1.2. Create the actual account
 
-After receiving the formal request for an account, it is time to create the account. 
+After receiving the formal request for an account, it is time to create the account. We have some nice user-friendly scripts installed on the system to do this:
+
+```bash
+sudo newuser <username> <temppassword>
+```
+
+<details>
+This does the following, basically:
 
 ```bash
 export username=newuser # replace newuser with the username
@@ -42,8 +50,7 @@ sudo chown -R $username /data/$username # set user to owner of
 sudo chmod -R go-rwx /data/$username # remove read write and execute permissions for anyone but owner
 sudo passwd $username
 ```
-
-In the last step, create a temporary password and record it.
+</details>
 
 ## 1.3. Add the user to the teams page
 
@@ -89,18 +96,35 @@ Also:
 - remove them from the userdocs contact table
 - make them a member (not an owner) of the microsoft teams page
 
-# 2. Server monitoring
+# 2. Deleting a user account
+Deleting a user account happens in two steps. First, we may (optionally) back up the user's home directory
+
+```bash
+sudo backupuser <username>
+```
+then you can use `scp` to download the compressed archive `username.tar.gz` in the working directory. Then, delete the file because it is probably huge.
+
+Then, we will properly remove the user
+
+```bash
+sudo removeuser <username>
+```
+
+This asks for confirmation before doing anything, so don't worry too much :)
+
+
+# 3. Server monitoring
 
 It's a good idea to regularly check for the usage of the server by different users. 
 
-## 2.1. Process monitoring
+## 3.1. Process monitoring
 Generally, the command `htop` is used to check for server usage, processes open by different users, and more. From there, stuck processes can be killed.
 
 ```bash
 sudo htop
 ```
 
-## 2.2. Main storage monitoring
+## 3.2. Main storage monitoring
 To ensure the `/data` disk is not filled up, you can check the overall usage and per-user usage using the following commands:
 
 ```bash
@@ -111,7 +135,7 @@ sudo du -hs /data/*
 If any user is using outrageous amounts of data, tell them to download it via the "Backing up your data" section in the [user docs](./userdocs) and then delete it.
 
 
-## 2.3. Temporary folder monitoring
+## 3.3. Temporary folder monitoring
 
 Some packages in R create a lot of data in the `/tmp` directory. Since this is on the (small) main boot disk, this can crash out RStudio server ("white screen of death"). To check available space, run
 
@@ -141,12 +165,12 @@ Known use-cases that have this problem are:
 - `cmdstanr` or `brms`: these save posterior samples as `csv` files in an R temp directory. Mitigation through creating a `~/tmp` directory, and then setting `options(cmdstanr_output_dir = "~/tmp")` and using `backend = "cmdstanr"`. Within the simulation, this directory should be emptied regularly.
 - 
 
-# 3. Managing RStudio sessions
+# 4. Managing RStudio sessions
 
 The commandline application `rstudio-server` is used to manage sessions on the RStudio server, and to manage the availability of the server itself.
 
-# 4. Fixing R package installation errors
+# 5. Fixing R package installation errors
 
 
-# 5. Updating R
+# 6. Updating R
 Update the R version in the [userdocs](./userdocs).
