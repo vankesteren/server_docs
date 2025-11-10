@@ -5,10 +5,7 @@ Here are the steps to follow in order to set up our department compute server
   - [1.2. Mount the data disk](#12-mount-the-data-disk)
   - [1.3. Create admin account](#13-create-admin-account)
   - [1.4. Update packages](#14-update-packages)
-  - [1.5. Add admin user management scripts](#15-add-admin-user-management-scripts)
-    - [1.5.1. Create a `newuser` program](#151-create-a-newuser-program)
-    - [1.5.2. Create a `removeuser` program](#152-create-a-removeuser-program)
-    - [1.5.3. Create a `backupuser` program](#153-create-a-backupuser-program)
+  - [1.5. Add admin management program](#15-add-admin-management-program)
 - [2. Installing R and RStudio server](#2-installing-r-and-rstudio-server)
   - [2.1. Installing R](#21-installing-r)
     - [2.1.1. Installing R through the package manager](#211-installing-r-through-the-package-manager)
@@ -91,7 +88,7 @@ sudo unminimize
 
 # install a boatload more software
 # some of these are packages, some of these are libraries needed to install R packages
-sudo apt install htop gdebi-core make build-essential libcurl4-openssl-dev zlib1g-dev libxml2-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev gfortran libblas-dev liblapack-dev libapparmor-dev cmake libudunits2-dev libgdal-dev gdal-bin software-properties-common dirmngr cargo rustc pandoc
+sudo apt install htop curl gdebi-core make build-essential libcurl4-openssl-dev zlib1g-dev libxml2-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev gfortran libblas-dev liblapack-dev libapparmor-dev cmake libudunits2-dev libgdal-dev gdal-bin software-properties-common dirmngr cargo rustc pandoc
 
 # now a reboot may be in order
 sudo reboot 
@@ -99,61 +96,14 @@ sudo reboot
 
 After the machine has rebooted, ssh into it again with your account.
 
-## 1.5. Add admin user management scripts
+## 1.5. Add admin management program
 
-Several scripts can make adminning a bit easier and more user-friendly.
+Several scripts can make adminning a bit easier and more user-friendly. We've created a separate repo for this: [vankesteren/adm](https://github.com/vankesteren/adm).
 
-### 1.5.1. Create a `newuser` program
+To install the admin program, run:
 
-```bash
-nano newuser
-```
-
-Then, copy-paste [this bash script](newuser.sh) (made with some LLM help)
-
-Then, save this script (`ctrl+X`, then `Y`).
-
-Then, we move this to `/usr/local/bin` and set it to be executable:
-
-```bash
-sudo mv newuser /usr/local/bin/newuser
-sudo chmod +x /usr/local/bin/newuser
-```
-
-Now, we can add users via `newuser username password`.
-
-### 1.5.2. Create a `removeuser` program
-
-```bash
-nano removeuser
-```
-
-Then, copy-paste [this bash script](removeuser.sh) (made with some LLM help)
-
-Then, save this script (`ctrl+X`, then `Y`).
-
-Then, we move this to `/usr/local/bin` and set it to be executable:
-
-```bash
-sudo mv removeuser /usr/local/bin/removeuser
-sudo chmod +x /usr/local/bin/removeuser
-```
-
-### 1.5.3. Create a `backupuser` program
-
-```bash
-nano backupuser
-```
-
-Then, copy-paste [this bash script](backupuser.sh) (made with some LLM help)
-
-Then, save this script (`ctrl+X`, then `Y`).
-
-Then, we move this to `/usr/local/bin` and set it to be executable:
-
-```bash
-sudo mv backupuser /usr/local/bin/backupuser
-sudo chmod +x /usr/local/bin/backupuser
+```sh
+sudo curl -fsSL https://raw.githubusercontent.com/vankesteren/adm/HEAD/install.sh | sh
 ```
 
 
