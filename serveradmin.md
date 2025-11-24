@@ -34,23 +34,11 @@
 
 ## 1.2. Create the actual account
 
-After receiving the formal request for an account, it is time to create the account. We have some nice user-friendly scripts installed on the system to do this:
+After receiving the formal request for an account, it is time to create the account. We have some nice user-friendly scripts installed on the system to do this (`adm` stands for admin):
 
 ```bash
-sudo newuser <username> <temppassword>
+sudo adm user add <username> <password> <emailaddress>
 ```
-
-<details>
-This does the following, basically:
-
-```bash
-export username=newuser # replace newuser with the username
-sudo useradd -m -d /data/$username $username
-sudo chown -R $username /data/$username # set user to owner of 
-sudo chmod -R go-rwx /data/$username # remove read write and execute permissions for anyone but owner
-sudo passwd $username
-```
-</details>
 
 ## 1.3. Add the user to the teams page
 

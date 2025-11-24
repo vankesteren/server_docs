@@ -325,10 +325,10 @@ To make nginx route traffic from http (port 80) and https (port 443) to Rstudio 
 First, create and edit a configuration file called `reverse_proxy.conf` in the sites-available directory: 
 
 ```bash
-sudo nano /etc/nginx/sites-available/reverse_proxy.conf
+sudo nano /etc/nginx/sites-available/reverse_proxy_https.conf
 ```
 
-Then, ensure that the content of this file is the same as the file here: [reverse_proxy.conf](./reverse_proxy.conf). A few things happen there:
+Then, ensure that the content of this file is the same as the file here: [reverse_proxy_https.conf](./reverse_proxy_https.conf). A few things happen there:
 
 - Reroute any http traffic to https
 - Reroute msserver.fss.uu.nl/docs to this documentation website
@@ -339,8 +339,10 @@ Then, ensure that the content of this file is the same as the file here: [revers
 Save the file (`ctrl+x` and then `y`) and then enable the site by creating a link to it in the sites-enabled directory:
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/reverse_proxy.conf /etc/nginx/sites-enabled/reverse_proxy.conf
+sudo ln -s /etc/nginx/sites-available/reverse_proxy_https.conf /etc/nginx/sites-enabled/reverse_proxy.conf
 ```
+
+As a fallback, we also have the HTTP-only version without SSL: [reverse_proxy_http.conf](./reverse_proxy_http.conf). To enable this one, put this next to the https conf file, and route the link to that file instead.
 
 RStudio server should now be available at https://msserver.fss.uu.nl from the university network or via VPN!
 
