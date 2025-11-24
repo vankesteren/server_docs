@@ -342,7 +342,12 @@ Save the file (`ctrl+x` and then `y`) and then enable the site by creating a lin
 sudo ln -s /etc/nginx/sites-available/reverse_proxy_https.conf /etc/nginx/sites-enabled/reverse_proxy.conf
 ```
 
-As a fallback, we also have the HTTP-only version without SSL: [reverse_proxy_http.conf](./reverse_proxy_http.conf). To enable this one, put this next to the https conf file, and route the link to that file instead.
+As a fallback, we also have the HTTP-only version without SSL: [reverse_proxy_http.conf](./reverse_proxy_http.conf). To enable this one, put this next to the https conf file, and route the link to that file instead. If/when you do: test and reload the config as follows:
+
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+```
 
 RStudio server should now be available at https://msserver.fss.uu.nl from the university network or via VPN!
 
