@@ -294,10 +294,10 @@ We want to make the server available through a secure connection over https. The
 First, we will create the key file on the server. For this, run the following code: 
 
 ```bash
-openssl req -new -newkey rsa:2048 -nodes -keyout msserver.fss.uu.key -out msserver.fss.uu.csr
+openssl req -new -newkey rsa:3072 -nodes -keyout msserver.fss.uu.key -out msserver.fss.uu.csr
 ```
 
-You will be asked interactively to fill out some additional information for the certificate signing authority to refer to. Fill out those. 
+You will be asked interactively to fill out some additional information for the certificate signing authority to refer to. Fill out those. For name, input `msserver.fss.uu.nl`, and you can enter your own email in the email address field.
 
 Move the key file to the required location:
 ```bash
