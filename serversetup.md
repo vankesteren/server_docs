@@ -305,7 +305,7 @@ sudo mkdir /etc/cert
 sudo mv msserver.fss.uu.key /etc/cert/msserver.fss.uu.key
 ```
 
-Then send the `.csr` file to the IT department so they can have the key signed. That will yield the `.pem` file, which should be uploaded and put in the correct location (`/etc/cert/msserver_fss_uu_nl.pem`).
+Then send the `.csr` as well as the `.key` file to the IT department so they can have the key signed. That will yield the `.pem` file, which should be uploaded and put in the correct location (`/etc/cert/msserver_fss_uu_nl.pem`).
 
 
 ## 3.2. Installing nginx
