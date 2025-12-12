@@ -52,8 +52,6 @@ To use the server, abide by these rules:
 2. If you aren't sure about something, read again and then _ask_ before doing.
 3. If you misuse the server, your account will be suspended.
 
-TODO: add a step closing your processes in your code/quitting the session manually.
-
 ## 4.1. Scheduling time
 Multiple users can connect to the server at the same time. If you are preparing your simulation or just trying out small stuff, you can always login to the server. If you want to run a large simulation, please reserve time for this on the [Google sheet schedule](https://docs.google.com/spreadsheets/d/1YmaAHvosjAvPZCP4mZkHpW-yuWUnar4o5oMbvXBvWIg/edit?usp=sharing).
 
@@ -115,7 +113,7 @@ scp -rC testuser@msserver.fss.uu.nl:~/simulation_folder local_backup
 ```
 
 ## 4.5. R sessions
-When you log in, you start an `R` session. It will remain open until you stop it (red button in the top right corner). Please close your `R` session when you are done. The current R version is the following:
+When you log in, you start an `R` session. It will remain open until you stop it, even if you close the window. To close the session, click the red 'quit' button in the top right corner. Please always close your `R` session when you are done. The current R version is the following:
 
 ```
 R version 4.4.2 (2024-10-31) -- "Pile of Leaves"
