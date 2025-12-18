@@ -57,6 +57,8 @@ Multiple users can connect to the server at the same time. If you are preparing 
 
 Please try to keep the maximum reservation time to maximum 1 week in busy periods. The schedule includes a "% use" column, this means either the maximum percentage of cores you will use or the maximum percentage of RAM you will use, whichever is biggest. (Don't worry too much about this, just try to estimate it a little bit by running a test and guesstimating).
 
+You can estimate how much time and memory you will need with the 'Profiling' tool in RStudio on the server.^[For background info on profiling, see e.g. the [Advanced R](https://adv-r.hadley.nz/perf-measure.html#profiling) book. For practical tips on using the Profiling tool, see e.g. the [Posit](https://support.posit.co/hc/en-us/articles/218221837-Profiling-R-code-with-the-RStudio-IDE) support page.] You can also use `htop` in the terminal while running a pilot script, or use the `object.size()` function in the R console to check how big your output will be.
+
 ## 4.2. Server specifications
 
 The server is a virtual server running on quite serious hardware. The server can be scaled up to the following:
@@ -113,7 +115,7 @@ scp -rC testuser@msserver.fss.uu.nl:~/simulation_folder local_backup
 ```
 
 ## 4.5. R sessions
-When you log in, you start an `R` session. It will remain open until you stop it (red button in the top right corner). Please close your `R` session when you are done. The current R version is the following:
+When you log in, you start an `R` session. It will remain open until you stop it, even if you close the window. To close the session, click the red 'quit' button in the top right corner. Please always close your `R` session when you are done. The current R version is the following:
 
 ```
 R version 4.4.2 (2024-10-31) -- "Pile of Leaves"
