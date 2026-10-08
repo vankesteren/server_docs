@@ -286,28 +286,26 @@ We will use `nginx` to set up a reverse proxy and to enable secure connection ov
 
 ## 3.1. Setting up SSL keyfiles
 
-We want to make the server available through a secure connection over https. Therefore, we need to create SSL cryptographic that our nginx server can refer to. Those files will need to be in the following locations:
+We want to make the server available through a secure connection over https. Therefore, we need SSL certificate files that our nginx server can refer to. Those files are in the following locations:
 
 ```
 /etc/cert/msserver_fss_uu_nl.pem
 /etc/cert/msserver.fss.uu.key
 ```
 
-First, we will create the key file on the server. For this, run the following code: 
+The IT department handles the creation and renewal of these certificates automatically through a cronjob. When requesting the virtual machine (see [section 1.1](#11-request-a-virtual-machine)), ask the IT department to set up the TLS certificate management for the server's domain (`msserver.fss.uu.nl`). They will configure a cronjob that places and renews the certificate files in `/etc/cert/`.
+
+Verify that the certificate files are present and valid:
 
 ```bash
-openssl req -new -newkey rsa:3072 -nodes -keyout msserver.fss.uu.key -out msserver.fss.uu.csr
+# check that the files exist
+ls -la /etc/cert/
+
+# check the certificate expiry date
+openssl x509 -enddate -noout -in /etc/cert/msserver_fss_uu_nl.pem
 ```
 
-You will be asked interactively to fill out some additional information for the certificate signing authority to refer to. Fill out those. For name, input `msserver.fss.uu.nl`, and you can enter your own email in the email address field.
-
-Move the key file to the required location:
-```bash
-sudo mkdir /etc/cert
-sudo mv msserver.fss.uu.key /etc/cert/msserver.fss.uu.key
-```
-
-Then send the `.csr` as well as the `.key` file to the IT department so they can have the key signed. That will yield the `.pem` file, which should be uploaded and put in the correct location (`/etc/cert/msserver_fss_uu_nl.pem`).
+> If there are any issues with the certificates (e.g., expired or missing files), contact the IT department.
 
 
 ## 3.2. Installing nginx
